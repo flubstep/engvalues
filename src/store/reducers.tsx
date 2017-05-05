@@ -1,8 +1,7 @@
-const CARD_TEXTS = require('./values.json')
+const CARD_TEXTS = require('./values.json');
 // Update once DefinitelyTyped includes uuid 3.0.1
 const uuid = require('uuid');
 import { createStore } from 'redux';
-
 
 /*
   Actions:
@@ -47,18 +46,19 @@ const initialCards = CARD_TEXTS.map((text: any) => ({
 const computeCardsNeeded = (cards: any) => {
   const arr = new Array<number>();
   arr.push(0);
-  let remaining = cards.length
+  let remaining = cards.length;
   while (remaining >= 1) {
-    remaining = Math.floor(remaining/2);
+    remaining = Math.floor(remaining / 2);
     arr.push(remaining);
   }
   return arr;
-}
+};
+
 const initialState = {
   cards: initialCards,
   stage: 1,
   cardsNeeded: computeCardsNeeded(initialCards)
-}
+};
 
 const reducer = (state: any = initialState, action: any) => {
   switch (action.type) {
@@ -67,7 +67,6 @@ const reducer = (state: any = initialState, action: any) => {
         cards: state.cards.map((c: any) => card(c, action, state.stage)),
         cardsNeeded: state.cardsNeeded,
         stage: state.stage
-
       };
     // Nothing currently powers this, but a previous
     // button should work pretty much out of the box
@@ -84,7 +83,6 @@ const reducer = (state: any = initialState, action: any) => {
         cardsNeeded: state.cardsNeeded,
         stage: state.stage + 1
       };
-
     default:
       return state;
   }

@@ -2,7 +2,8 @@ import { Component } from 'react';
 import * as React from 'react';
 // require avoids TS "Could not find a declaration file" errors.
 // Update once DefinitelyTyped includes react-redux 5.0.4
-const reactRedux = require('react-redux');
+const { connect } = require('react-redux');
+
 import ShufflingCardGrid from './components/ShufflingCardGrid';
 import StageInfo from './components/StageInfo';
 
@@ -72,4 +73,4 @@ class App extends Component<any, any> {
   }
 }
 
-export default reactRedux.connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

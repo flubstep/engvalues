@@ -6,8 +6,7 @@ import Card from './Card';
 
 import './ShufflingCardGrid.css';
 
-
-class ShufflingCardGrid extends Component<any,any> {
+class ShufflingCardGrid extends Component<any, any> {
 
   constructor(props: any, context: any) {
     super(props, context);
@@ -22,15 +21,12 @@ class ShufflingCardGrid extends Component<any,any> {
     window.addEventListener('click', this.shuffle);
   }
 
-
   shuffle = () => {
     let n = this.state.activeCards.length;
     let newCards = this.state.activeCards.slice();
     for (let idx of _.range(n)) {
       let swapIdx = _.random(idx, n - 1);
-      let [a, b] = [newCards[idx], newCards[swapIdx]];
-      newCards[idx] = b;
-      newCards[swapIdx] = a;
+      [newCards[idx], newCards[swapIdx]] = [newCards[swapIdx], newCards[idx]];
     }
     this.setState({
       cardIndex: _.fromPairs(
@@ -42,35 +38,35 @@ class ShufflingCardGrid extends Component<any,any> {
 
   componentWillReceiveProps(nextProps: any) {
     const activeCards = nextProps.cards.filter( (c: any) => c.mark >= nextProps.stage - 1);
-    const updater = {activeCards: activeCards};
+    const updater: any = { activeCards };
 
-    if (nextProps.stage != this.props.stage) {
-      updater['cardIndex'] = _.fromPairs(
+    if (nextProps.stage !== this.props.stage) {
+      updater.cardIndex = _.fromPairs(
         activeCards.map((c: any, index: any) => [c.key, index])
       );
     }
-    this.setState(updater)
+    this.setState(updater);
   }
 
   render() {
-    const numSelected = this.state.activeCards.filter( (c: any) => c.mark == this.props.stage).length;
-    const locked = numSelected >= this.props.cardsNeeded[this.props.stage]
+    const numSelected = this.state.activeCards.filter( (c: any) => c.mark === this.props.stage).length;
+    const locked = numSelected >= this.props.cardsNeeded[this.props.stage];
     const rowSize = Math.floor(this.props.width / this.props.itemWidth);
 
     const indexToXPos = (index: any) => {
       const col = index % rowSize;
       const padding = (col + 1) * this.props.padding;
       return (col * this.props.itemWidth) + padding;
-    }
+    };
     const indexToYPos = (index: any) => {
       const row = Math.floor(index / rowSize);
       const padding = (row + 1) * this.props.padding;
       return (row * this.props.itemHeight) + padding;
-    }
+    };
     // tslint:disable-next-line
     const transitionTime = (index: any) => {
       return 400 + (index % 6 * 50);
-    }
+    };
 
     const actualWidth = indexToXPos(rowSize - 1) + this.props.padding + this.props.itemWidth;
 
@@ -83,7 +79,6 @@ class ShufflingCardGrid extends Component<any,any> {
         className="ShufflingCardGrid"
         >
         {
-
           this.state.activeCards.map((_: any, index: any) => (
             <div
               key={index}
