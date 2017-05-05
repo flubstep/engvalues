@@ -60,7 +60,7 @@ class App extends Component<any, any> {
     const cardWidth = 160;
     return (
       <div className="App">
-        <StageInfo {...this.props} />
+        <StageInfo {...this.props} className="fake" />
         <ShufflingCardGrid
           width={totalWidth}
           height={this.state.windowHeight}
@@ -68,6 +68,7 @@ class App extends Component<any, any> {
           itemHeight={120}
           {...this.props}
         />
+        <StageInfo {...this.props} />
       </div>
     );
   }
