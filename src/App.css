@@ -7,3 +7,14 @@
     50% { transform: scale(1.2); }
     100% { transform: scale(1.0); }
 }
+
+@keyframes heart {
+    0% { transform: translateY(100px); opacity: 1.0; }
+    100% { transform: translateY(0px); opacity: 0;}
+}
+
+.heart {
+    position: absolute;
+    opacity: 0;
+    z-index: 100;
+}
