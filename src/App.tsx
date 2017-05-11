@@ -1,36 +1,42 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import { Component } from 'react';
+import * as React from 'react';
+// require avoids TS "Could not find a declaration file" errors.
+// Update once DefinitelyTyped includes react-redux 5.0.4
+const { connect } = require('react-redux');
 
 import ShufflingCardGrid from './components/ShufflingCardGrid';
+import StageInfo from './components/StageInfo';
 
+import './App.css';
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: any) : any => {
   return {
     stage: state.stage,
-    cards: state.cards
-  }
+    cards: state.cards,
+    cardsNeeded: state.cardsNeeded
+  };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: any) : any => {
   return {
-    onCardMark: (mark) => {
+    onCardMark: (key: any) : any => {
       dispatch({
-        type: 'MARK_CARD',
-        mark
-      })
+        type: 'TOGGLE_CARD',
+        key
+      });
     },
-    onAdvanceStage: (stage) => {
+    onAdvanceStage: (stage: any) : any => {
       dispatch({
         type: 'ADVANCE_STAGE',
         stage
-      })
+      });
     }
-  }
-}
+  };
+};
 
-class App extends Component {
+class App extends Component<any, any> {
 
-  constructor(props, context) {
+  constructor(props: any, context: any) {
     super(props, context);
     this.state = {
       windowWidth: window.innerWidth,
@@ -54,13 +60,15 @@ class App extends Component {
     const cardWidth = 160;
     return (
       <div className="App">
+        <StageInfo {...this.props} className="fake" />
         <ShufflingCardGrid
           width={totalWidth}
           height={this.state.windowHeight}
           itemWidth={cardWidth}
           itemHeight={120}
-          { ...this.props }
+          {...this.props}
         />
+        <StageInfo {...this.props} />
       </div>
     );
   }
