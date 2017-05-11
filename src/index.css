@@ -8,25 +8,3 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
-
-.btn {
-    background-color: #388e3c; /* green 700 */
-    color: white;
-    height: 40px;
-    padding: 0px 20px;
-    border-radius: 4px;
-    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
-    font-size: 16px;
-    text-transform: uppercase;
-    letter-spacing: 0.8pt;
-    display: flex;
-    align-items: center;
-    transition: background-color 80ms ease-in-out;
-    cursor: pointer;
-}
-
-.btn.disabled {
-    background-color: #98ee99; /* green 400 light */
-    box-shadow: none;
-    cursor: auto;
-}
