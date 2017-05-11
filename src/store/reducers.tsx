@@ -1,4 +1,5 @@
 const CARD_TEXTS = require('./values.json');
+const INSTRUCTIONS = require('./instructions.json');
 // Update once DefinitelyTyped includes uuid 3.0.1
 const uuid = require('uuid');
 import { createStore } from 'redux';
@@ -75,7 +76,7 @@ const reducer = (state: any = initialState, action: any) => {
       return {
         cards: state.cards,
         cardsNeeded: state.cardsNeeded,
-        stage: Math.max(state - 1, 0)
+        stage: Math.max(state.stage - 1, 0)
       };
     case 'ADVANCE_STAGE':
       return {
