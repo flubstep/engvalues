@@ -1,5 +1,5 @@
 const CARD_TEXTS = require('./values.json');
-const INSTRUCTIONS = require('./instructions.json');
+// const INSTRUCTIONS = require('./instructions.json');
 // Update once DefinitelyTyped includes uuid 3.0.1
 const uuid = require('uuid');
 import { createStore } from 'redux';
