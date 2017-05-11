@@ -3,6 +3,7 @@ const CARD_TEXTS = require('./values.json');
 // Update once DefinitelyTyped includes uuid 3.0.1
 const uuid = require('uuid');
 import { createStore } from 'redux';
+import { LIMIT_TWENTY } from './featureFlags';
 
 /*
   Actions:
@@ -38,7 +39,9 @@ const card = (state: any = {}, action: any, stage: number) => {
     What round they were selected in
 */
 
-const initialCards = CARD_TEXTS.map((text: any) => ({
+const limit = LIMIT_TWENTY ? 20 : CARD_TEXTS.length;
+
+const initialCards = CARD_TEXTS.slice(0, limit).map((text: any) => ({
   key: uuid.v4(),
   text,
   mark: 0,
