@@ -2,6 +2,8 @@ import './StageInfo.css';
 import { Component } from 'react';
 import * as React from 'react';
 
+import cardsNeeded from '../store/cardsNeeded';
+
 class StageInfo extends Component<any, any> {
 
   constructor(props: any, context: any) {
@@ -15,11 +17,12 @@ class StageInfo extends Component<any, any> {
     return cards.filter((c: any) => c.mark === this.props.stage).length;
   }
 
-  numNeeded(cardsNeeded: any) {
-    return cardsNeeded[this.props.stage];
+  numNeeded(cards: any) {
+    return Math.floor(cards.length / 2);
   }
 
   componentWillReceiveProps(nextProps: any) {
+    // The first time we pass the threshhold, show the continue button.
     if (this.state.showContinue) {
       if (this.props.stage !== nextProps.stage) {
         this.setState({
@@ -28,7 +31,7 @@ class StageInfo extends Component<any, any> {
       }
     } else {
       const numSelected = this.numSelected(nextProps.cards);
-      const needed = this.numNeeded(nextProps.cardsNeeded);
+      const needed = cardsNeeded(nextProps.stage);
       if (numSelected >= needed) {
         this.setState({
           showContinue: true
@@ -46,7 +49,7 @@ class StageInfo extends Component<any, any> {
 
   render() {
     const numSelected = this.numSelected(this.props.cards);
-    const needed = this.numNeeded(this.props.cardsNeeded);
+    const needed = cardsNeeded(this.props.stage);
     const canAdvance = numSelected === needed;
     const tooMany = numSelected > needed;
     return (

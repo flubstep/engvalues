@@ -8,6 +8,7 @@ const _ = require('lodash');
 const { connect } = require('react-redux');
 const FaHeart = require('react-icons/lib/fa/heart');
 
+import InstructionsModal from './components/InstructionsModal';
 import ShufflingCardGrid from './components/ShufflingCardGrid';
 import StageInfo from './components/StageInfo';
 
@@ -17,15 +18,16 @@ const mapStateToProps = (state: any) : any => {
   return {
     stage: state.stage,
     cards: state.cards,
-    cardsNeeded: state.cardsNeeded
+    modal: state.modal
   };
 };
 
 const mapDispatchToProps = (dispatch: any) : any => {
   return {
-    onCardMark: (key: any) : any => {
+    onCardMark: (key: any, stage: any) : any => {
       dispatch({
         type: 'TOGGLE_CARD',
+        stage: stage,
         key
       });
     },
@@ -33,6 +35,11 @@ const mapDispatchToProps = (dispatch: any) : any => {
       dispatch({
         type: 'ADVANCE_STAGE',
         stage
+      });
+    },
+    onCloseModal: () : any => {
+      dispatch({
+        type: 'HIDE_MODAL'
       });
     }
   };
@@ -101,6 +108,10 @@ class App extends Component<any, any> {
           {...this.props}
         />
         <StageInfo {...this.props} />
+        <InstructionsModal
+          {...this.props}
+          active={this.props.modal.active}
+        />
       </div>
     );
   }

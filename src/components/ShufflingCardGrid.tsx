@@ -17,8 +17,6 @@ class ShufflingCardGrid extends Component<any, any> {
       ),
       activeCards: this.props.cards.filter( (c: any) => c.mark >= this.props.stage - 1)
     };
-    // Just for demo purposes
-    window.addEventListener('click', this.shuffle);
   }
 
   shuffle = () => {
@@ -46,11 +44,15 @@ class ShufflingCardGrid extends Component<any, any> {
       );
     }
     this.setState(updater);
+    // If we're starting a new stage, shuffle the cards when they close the instructions
+    if (this.props.modal.active && !nextProps.modal.active) {
+      this.shuffle();
+    }
   }
 
   render() {
-    const numSelected = this.state.activeCards.filter( (c: any) => c.mark === this.props.stage).length;
-    const locked = numSelected >= this.props.cardsNeeded[this.props.stage];
+    // const numSelected = this.state.activeCards.filter( (c: any) => c.mark === this.props.stage).length;
+    // const locked = numSelected >= this.props[this.props.stage];
     const rowSize = Math.floor(this.props.width / this.props.itemWidth);
 
     const indexToXPos = (index: any) => {
@@ -102,14 +104,15 @@ class ShufflingCardGrid extends Component<any, any> {
                   left: this.state.centered ? centeredX : indexToXPos(index),
                   width: this.props.itemWidth,
                   height: this.props.itemHeight,
-                  transition: `all ${transitionTime(cardIndex)}ms ease-in-out, box-shadow 80ms linear, background-color 80ms linear`
+                  transition: `all ${transitionTime(cardIndex)}ms ease-in-out,
+                               box-shadow 80ms linear,
+                               background-color 80ms linear`
                 }}
                 onClick={(e: any) => {
                   e.stopPropagation();
-                  this.props.onCardMark(card.key, 'selected');
+                  this.props.onCardMark(card.key, this.props.stage);
                 }}
                 stage={this.props.stage}
-                locked={locked}
                 {...card}
               />
             );
