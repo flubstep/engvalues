@@ -11,6 +11,7 @@ const FaHeart = require('react-icons/lib/fa/heart');
 import InstructionsModal from './components/InstructionsModal';
 import ShufflingCardGrid from './components/ShufflingCardGrid';
 import StageInfo from './components/StageInfo';
+import CardReview from './components/CardReview';
 
 import './App.css';
 
@@ -96,24 +97,32 @@ class App extends Component<any, any> {
     const totalWidth = Math.min(this.state.windowWidth, 900);
     const cardWidth = 160;
 
-    return (
-      <div className="App">
-        {this.renderHearts()}
-        <StageInfo {...this.props} className="fake" />
-        <ShufflingCardGrid
-          width={totalWidth}
-          height={this.state.windowHeight}
-          itemWidth={cardWidth}
-          itemHeight={120}
-          {...this.props}
-        />
-        <StageInfo {...this.props} />
-        <InstructionsModal
-          {...this.props}
-          active={this.props.modal.active}
-        />
-      </div>
-    );
+    if (this.props.stage <= 5) {
+      return (
+        <div className="App">
+          {this.renderHearts()}
+          <StageInfo {...this.props} className="fake" />
+          <ShufflingCardGrid
+            width={totalWidth}
+            height={this.state.windowHeight}
+            itemWidth={cardWidth}
+            itemHeight={120}
+            {...this.props}
+          />
+          <StageInfo {...this.props} />
+          <InstructionsModal
+            {...this.props}
+            active={this.props.modal.active}
+          />
+        </div>
+      );
+    } else {
+      return (
+        <div className="App">
+          <CardReview {...this.props} />
+        </div>
+      );
+    }
   }
 }
 
