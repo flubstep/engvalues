@@ -58,7 +58,7 @@ class StageInfo extends Component<any, any> {
         { this.state.showContinue ? (
           <div
             className={'btn StageInfo--btn-continue' + (canAdvance ? '' : ' disabled')}
-            onClick={this.onAdvance}
+            onClick={canAdvance ? this.onAdvance : undefined}
             >
             Continue
           </div>
