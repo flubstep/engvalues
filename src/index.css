@@ -46,9 +46,9 @@ body {
 }
 
 .btn.disabled {
-    background-color: #98ee99; /* green 400 light */
+    opacity: .65; /* like bootstrap */
     box-shadow: none;
-    cursor: auto;
+    cursor: not-allowed;
 }
 
 .modal-container {
