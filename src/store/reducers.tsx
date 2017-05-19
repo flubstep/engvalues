@@ -3,8 +3,7 @@ const CARD_TEXTS = require('./values.json');
 // Update once DefinitelyTyped includes uuid 3.0.1
 const uuid = require('uuid');
 import { createStore, combineReducers } from 'redux';
-import { LIMIT_TWENTY } from './featureFlags';
-
+import { NUM_CARDS } from './featureFlags'
 /*
   Actions:
     TOGGLE_CARD
@@ -71,8 +70,7 @@ const stage = (state: number = 1, action: any) => {
   }
 };
 
-const limit = LIMIT_TWENTY ? 20 : CARD_TEXTS.length;
-const initialCards = CARD_TEXTS.slice(0, limit).map((text: any) => ({
+const initialCards = CARD_TEXTS.slice(0, NUM_CARDS).map((text: any) => ({
   key: uuid.v4(),
   text,
   mark: 0,

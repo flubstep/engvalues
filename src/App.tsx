@@ -8,6 +8,7 @@ const _ = require('lodash');
 const { connect } = require('react-redux');
 const FaHeart = require('react-icons/lib/fa/heart');
 
+import cardsNeeded from './store/cardsNeeded';
 import Intro from './components/Intro';
 import ShufflingCardGrid from './components/ShufflingCardGrid';
 import StageInfo from './components/StageInfo';
@@ -97,7 +98,7 @@ class App extends Component<any, any> {
     const totalWidth = Math.min(this.state.windowWidth, 900);
     const cardWidth = 160;
 
-    if (this.props.stage <= 5) {
+    if (cardsNeeded(this.props.stage) > 0) {
       return (
         <div className="App">
           {this.renderHearts()}
