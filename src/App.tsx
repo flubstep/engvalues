@@ -8,10 +8,10 @@ const _ = require('lodash');
 const { connect } = require('react-redux');
 const FaHeart = require('react-icons/lib/fa/heart');
 
-import InstructionsModal from './components/InstructionsModal';
+import Intro from './components/Intro';
 import ShufflingCardGrid from './components/ShufflingCardGrid';
 import StageInfo from './components/StageInfo';
-import CardReview from './components/CardReview';
+import Outro from './components/Outro';
 
 import './App.css';
 
@@ -101,7 +101,7 @@ class App extends Component<any, any> {
       return (
         <div className="App">
           {this.renderHearts()}
-          <StageInfo {...this.props} className="fake" />
+          <div className={'StageInfo'} style={{position:'relative', opacity: 0}} />
           <ShufflingCardGrid
             width={totalWidth}
             height={this.state.windowHeight}
@@ -110,7 +110,7 @@ class App extends Component<any, any> {
             {...this.props}
           />
           <StageInfo {...this.props} />
-          <InstructionsModal
+          <Intro
             {...this.props}
             active={this.props.modal.active}
           />
@@ -119,7 +119,7 @@ class App extends Component<any, any> {
     } else {
       return (
         <div className="App">
-          <CardReview {...this.props} />
+          <Outro {...this.props} />
         </div>
       );
     }
