@@ -3,6 +3,7 @@ const _ = require('lodash');
 
 import './CardReview.css';
 import './ModalCommon.css'
+import { NUM_WISHLIST_CARDS } from '../store/featureFlags';
 
 
 class OutroModal extends React.Component<any,any> {
@@ -15,7 +16,7 @@ class OutroModal extends React.Component<any,any> {
   }
 
   render() {
-    let { cards, ...otherProps } = this.props;
+    let { cardGroups, ...otherProps } = this.props;
     return (
       <div className={'modal-container'}>
         <div
@@ -27,11 +28,14 @@ class OutroModal extends React.Component<any,any> {
             <p className="ModalCommon--content">
               All done! The items you selected as most important are:
             </p>
-            <ul className="ModalCommon--content">
-            {cards.map((card: any) => (
-              <li> {card.text} </li>
-            ))}
-            </ul>
+
+            {cardGroups.map((group: any) => (
+                <ul className="ModalCommon--content">
+                {group.map((card: any) => (
+                  <li> {card.text} </li>
+                ))}
+                </ul>
+              ))}
           </div>
         </div>
       </div>
@@ -42,19 +46,27 @@ class OutroModal extends React.Component<any,any> {
 class Outro extends React.Component<any,any> {
 
   render() {
-    let stages = [1, 2, 3, 4, 5];
-    let cardsByStage = _.fromPairs(stages.map(stage => [stage, []]));
+    let cardsByStage = {};
     for (let card of this.props.cards) {
       let stage = card.mark;
-      cardsByStage[stage] = cardsByStage[stage] || [];
+      if (!(stage in cardsByStage)) {
+        cardsByStage[stage] = []
+      }
       cardsByStage[stage].push(card);
     }
     let wishlist: any = []
-    for (let stage of [5, 4, 3, 2]) {
-      wishlist.push.apply(wishlist, cardsByStage[stage])
+    let wishlistLength = 0
+
+    const stages = Object.keys(cardsByStage).map((val) => Number(val)).sort().reverse()
+    for (let stage of stages) {
+      if (wishlistLength >= NUM_WISHLIST_CARDS) {
+        break
+      }
+      wishlist.push(cardsByStage[stage])
+      wishlistLength += cardsByStage[stage].length
     }
 
-    return <OutroModal cards={wishlist} />;
+    return <OutroModal cardGroups={wishlist} />;
   }
 }
 
