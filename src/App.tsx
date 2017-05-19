@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import * as React from 'react';
-import { HEARTS } from './store/featureFlags';
+import { HEARTS, MIN_SELECT } from './store/featureFlags';
 
 // require avoids TS "Could not find a declaration file" errors.
 // Update once DefinitelyTyped includes react-redux 5.0.4
@@ -98,7 +98,7 @@ class App extends Component<any, any> {
     const totalWidth = Math.min(this.state.windowWidth, 900);
     const cardWidth = 160;
 
-    if (cardsNeeded(this.props.stage) > 0) {
+    if (cardsNeeded(this.props.stage) >= MIN_SELECT) {
       return (
         <div className="App">
           {this.renderHearts()}
