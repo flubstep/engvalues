@@ -78,3 +78,36 @@ body {
     box-shadow: 1px 1px 6px rgba(0,0,0,0.3);
     animation: from-bottom 300ms;
 }
+
+
+/* Intro styles */
+
+.introContainer {
+    margin: 0px 50px 100px;
+    line-height: 1.45;
+    font-size: 21px;
+    padding: 10px 50px 20px;
+    background-color: white;
+    font-family: serif;
+}
+
+.introContainer > p {
+    width: 800px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.introButton {
+    position: relative;
+    top: -100px;
+    background-color: #02b875;
+    display: inline-block;
+    color: white;
+    padding: 20px;
+    transform: translateY(-50%) translateX(-50%);
+    font-size: 21px;
+    left: 50%;
+    font-family: serif;
+}
+
