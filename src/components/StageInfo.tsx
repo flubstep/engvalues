@@ -1,15 +1,14 @@
-import './StageInfo.css';
 import { Component } from 'react';
-import * as React from 'react';
+
+import './StageInfo.css';
 
 import cardsNeeded from '../store/cardsNeeded';
 
 class StageInfo extends Component<any, any> {
-
   constructor(props: any, context: any) {
     super(props, context);
     this.state = {
-      showContinue: false
+      showContinue: false,
     };
   }
 
@@ -26,7 +25,7 @@ class StageInfo extends Component<any, any> {
     if (this.state.showContinue) {
       if (this.props.stage !== nextProps.stage) {
         this.setState({
-          showContinue: false
+          showContinue: false,
         });
       }
     } else {
@@ -34,7 +33,7 @@ class StageInfo extends Component<any, any> {
       const needed = cardsNeeded(nextProps.stage);
       if (numSelected >= needed) {
         this.setState({
-          showContinue: true
+          showContinue: true,
         });
       }
     }
@@ -45,7 +44,7 @@ class StageInfo extends Component<any, any> {
     if (this.props.onAdvanceStage) {
       this.props.onAdvanceStage(this.props.stage);
     }
-  }
+  };
 
   render() {
     const numSelected = this.numSelected(this.props.cards);
@@ -53,24 +52,25 @@ class StageInfo extends Component<any, any> {
     const canAdvance = numSelected === needed;
     const tooMany = numSelected > needed;
     return (
-      <div className={'StageInfo ' + this.props.className}>
+      <div className={"StageInfo " + this.props.className}>
         <h2 className="StageInfo--stage">Round {this.props.stage}</h2>
-        { this.state.showContinue ? (
+        {this.state.showContinue ? (
           <div
-            className={'btn StageInfo--btn-continue' + (canAdvance ? '' : ' disabled')}
+            className={"btn StageInfo--btn-continue" + (canAdvance ? "" : " disabled")}
             onClick={canAdvance ? this.onAdvance : undefined}
-            >
+          >
             Continue
           </div>
         ) : (
-          <h1 className="StageInfo--instructions">Select <b>{needed}</b> cards to continue</h1>
+          <h1 className="StageInfo--instructions">
+            Select <b>{needed}</b> cards to continue
+          </h1>
         )}
         <h2 className="StageInfo--progress">
-          <span
-            className={'number-selected' + (tooMany ? ' over' : '')}
-            key={numSelected}
-            >{numSelected}
-           </span> / {needed}
+          <span className={"number-selected" + (tooMany ? " over" : "")} key={numSelected}>
+            {numSelected}
+          </span>{" "}
+          / {needed}
         </h2>
       </div>
     );
@@ -79,7 +79,7 @@ class StageInfo extends Component<any, any> {
 
 namespace StageInfo {
   export const defaultProps = {
-    className: ''
+    className: "",
   };
 }
 

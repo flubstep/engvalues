@@ -42,7 +42,7 @@ class OutroModal extends React.Component<any, any> {
 
 class Outro extends React.Component<any, any> {
   render() {
-    let cardsByStage = {};
+    let cardsByStage: { [key: string]: any } = {};
     for (let card of this.props.cards) {
       let stage = card.mark;
       if (!(stage in cardsByStage)) {

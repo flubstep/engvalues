@@ -41,7 +41,7 @@ class CardRow extends React.Component<any, any> {
 class CardReview extends React.Component<any, any> {
   render() {
     let stages = [1, 2, 3, 4, 5];
-    let cardsByStage = _.fromPairs(stages.map((stage) => [stage, []]));
+    let cardsByStage = _.fromPairs<any>(stages.map((stage) => [stage, []]));
     for (let card of this.props.cards) {
       let stage = card.mark;
       cardsByStage[stage] = cardsByStage[stage] || [];
