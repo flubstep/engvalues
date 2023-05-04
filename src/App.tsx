@@ -1,92 +1,84 @@
 import { Component } from 'react';
-import * as React from 'react';
-import { HEARTS, MIN_SELECT } from './store/featureFlags';
-
-// require avoids TS "Could not find a declaration file" errors.
-// Update once DefinitelyTyped includes react-redux 5.0.4
-const _ = require('lodash');
-const { connect } = require('react-redux');
-const FaHeart = require('react-icons/lib/fa/heart');
-
-import cardsNeeded from './store/cardsNeeded';
-import Intro from './components/Intro';
-import ShufflingCardGrid from './components/ShufflingCardGrid';
-import StageInfo from './components/StageInfo';
-import Outro from './components/Outro';
 
 import './App.css';
 
-const mapStateToProps = (state: any) : any => {
+import _ from 'lodash';
+import { FaHeart } from 'react-icons/fa';
+import { connect } from 'react-redux';
+
+import Intro from './components/Intro';
+import Outro from './components/Outro';
+import ShufflingCardGrid from './components/ShufflingCardGrid';
+import StageInfo from './components/StageInfo';
+import cardsNeeded from './store/cardsNeeded';
+import { HEARTS, MIN_SELECT } from './store/featureFlags';
+
+const mapStateToProps = (state: any): any => {
   return {
     stage: state.stage,
     cards: state.cards,
-    modal: state.modal
+    modal: state.modal,
   };
 };
 
-const mapDispatchToProps = (dispatch: any) : any => {
+const mapDispatchToProps = (dispatch: any): any => {
   return {
-    onCardMark: (key: any, stage: any) : any => {
+    onCardMark: (key: any, stage: any): any => {
       dispatch({
-        type: 'TOGGLE_CARD',
+        type: "TOGGLE_CARD",
         stage: stage,
-        key
+        key,
       });
     },
-    onAdvanceStage: (stage: any) : any => {
+    onAdvanceStage: (stage: any): any => {
       dispatch({
-        type: 'ADVANCE_STAGE',
-        stage
+        type: "ADVANCE_STAGE",
+        stage,
       });
     },
-    onCloseModal: () : any => {
+    onCloseModal: (): any => {
       dispatch({
-        type: 'HIDE_MODAL'
+        type: "HIDE_MODAL",
       });
-    }
+    },
   };
 };
 
-class App extends Component<any, any> {
-
+class AppBase extends Component<any, any> {
   constructor(props: any, context: any) {
     super(props, context);
-    const heartStyles = _.range(100).map(() => (
-      {
-        top: _.random(0, window.innerHeight),
-        left:  _.random(0, window.innerWidth),
-        animation: `heart ${_.random(500, 1500)}ms ease-in-out`
-      }
-    ));
+    const heartStyles = _.range(100).map(() => ({
+      top: _.random(0, window.innerHeight),
+      left: _.random(0, window.innerWidth),
+      animation: `heart ${_.random(500, 1500)}ms ease-in-out`,
+    }));
     this.state = {
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight,
-      heartStyles
+      heartStyles,
     };
   }
 
   handleResize = () => {
     this.setState({
       windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight
+      windowHeight: window.innerHeight,
     });
-  }
+  };
 
   componentDidMount() {
-    window.addEventListener('resize', this.handleResize);
+    window.addEventListener("resize", this.handleResize);
   }
 
   renderHearts() {
     if (HEARTS) {
       return (
         <div className="hearts-container">
-          {
-            this.state.heartStyles.map((style: any) => (
-              <div className="heart" style={style}>
-                <FaHeart size={24} fill="red" />
-              </div>
-            ))
-          }
+          {this.state.heartStyles.map((style: any) => (
+            <div className="heart" style={style}>
+              <FaHeart size={24} fill="red" />
+            </div>
+          ))}
         </div>
       );
     } else {
@@ -102,7 +94,7 @@ class App extends Component<any, any> {
       return (
         <div className="App">
           {this.renderHearts()}
-          <div className={'StageInfo'} style={{position:'relative', opacity: 0}} />
+          <div className={"StageInfo"} style={{ position: "relative", opacity: 0 }} />
           <ShufflingCardGrid
             width={totalWidth}
             height={this.state.windowHeight}
@@ -111,10 +103,7 @@ class App extends Component<any, any> {
             {...this.props}
           />
           <StageInfo {...this.props} />
-          <Intro
-            {...this.props}
-            active={this.props.modal.active}
-          />
+          <Intro {...this.props} active={this.props.modal.active} />
         </div>
       );
     } else {
@@ -126,5 +115,5 @@ class App extends Component<any, any> {
     }
   }
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+const App = connect(mapStateToProps, mapDispatchToProps)(AppBase);
+export default App;
